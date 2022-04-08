@@ -20,18 +20,11 @@ def in_virtual_environment():
     else:
         return print(flag, base)
     
-in_virtual_environment()
-
-
+in_virtual_environment() # this should be True
 
 # unzip the files, containing the data, into specific directories
 def unzip(zip_location, extract_to):
     zipfile.ZipFile(zip_location, "r").extractall(extract_to)
-    
-zip_location = "C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/dogsvscats.zip"
-extract_to = "C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats"
-unzip(zip_location, extract_to)
-
 
 def mkdrs(parent, children, source, split, unzip = False):
     """
@@ -63,8 +56,7 @@ def mkdrs(parent, children, source, split, unzip = False):
     """
     
     # not False (any; a full path to the zipped file, containing the dataset)
-    if unzip:
-        unzip(zip_location = unzip, extract_to = parent)
+    unzip(zip_location = unzip, extract_to = parent) if unzip else None
     
     # initialize list to store valid filenames for each class[i] = children[i]
     filenames = []
@@ -84,7 +76,7 @@ def mkdrs(parent, children, source, split, unzip = False):
         # shuffle filenames
         filenames_shuffled = random.sample(filenames, len(filenames))
         
-        # split shuffled filenames into training and testing datasets
+        # split shuffled filenames into training and testing datasets, using the split argument as the splitting rule
         split_point = int(split * len(filenames))
         filenames_train = filenames_shuffled[:split_point]
         filenames_test = filenames_shuffled[split_point:]
@@ -100,10 +92,8 @@ def mkdrs(parent, children, source, split, unzip = False):
             paste_to = os.path.join(parent, "testing", children[i], f_test)
             copyfile(copy_from, paste_to)
             
-mkdrs(
-      parent = "C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages",
+mkdrs(parent = "C:/[...]/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages",
       children = ("Dogs", "Cats"),
-      source = ("C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Dog",
-                "C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Cat"),
-      split = .9
-      )
+      source = ("C:/[...]/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Dog",
+                "C:/[...]/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Cat"),
+      split = .9)
