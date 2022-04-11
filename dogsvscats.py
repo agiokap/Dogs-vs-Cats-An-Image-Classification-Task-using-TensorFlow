@@ -92,8 +92,55 @@ def mkdrs(parent, children, source, split, unzip = False):
             paste_to = os.path.join(parent, "testing", children[i], f_test)
             copyfile(copy_from, paste_to)
             
-mkdrs(parent = "C:/[...]/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages",
+mkdrs(parent = "C:/[...]/PetImages",
       children = ("Dogs", "Cats"),
-      source = ("C:/[...]/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Dog",
-                "C:/[...]/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Cat"),
+      source = ("C:/[...]/PetImages/Dog",
+                "C:/[...]/PetImages/Cat"),
       split = .9)
+
+def data_generators(training_path, validation_path,
+                    # flow_from_directory arguments
+                    batch_size, class_mode, target_size,
+                    # ImageDataGenerator parameters
+                    rescale = None,
+                    # augmentation (default: without augmentation)
+                    rotation_range = 0, width_shift_range = 0.0, height_shift_range = 0.0,
+                    shear_range = 0.0, zoom_range = 0.0,
+                    horizontal_flip = False, fill_mode = "nearest"):
+    
+    training_generator = ImageDataGenerator(rescale = rescale,
+                                            rotation_range = rotation_range,
+                                            width_shift_range = width_shift_range,
+                                            height_shift_range = height_shift_range,
+                                            shear_range = shear_range,
+                                            zoom_range = zoom_range,
+                                            horizontal_flip = horizontal_flip,
+                                            fill_mode = 'nearest').flow_from_directory(directory = training_path,
+                                                                                       batch_size = batch_size,
+                                                                                       class_mode = class_mode,
+                                                                                       target_size = target_size)
+                                                                                       
+    validation_generator = ImageDataGenerator(rescale = rescale).flow_from_directory(directory = validation_path,
+                                                                                     batch_size = batch_size,
+                                                                                     class_mode = class_mode,
+                                                                                     target_size = target_size)
+    
+    return training_generator, validation_generator
+
+training_generator, validation_generator = data_generators(
+    training_path = "C:/[...]/Training",
+    validation_path = "C:/[...]/Testing",
+    # flow_from_directory arguments
+    batch_size = 20,
+    class_mode = "binary",
+    target_size = (150, 150),
+    # ImageDataGenerator parameters
+    rescale = 1. / 255.,
+    # augmentation (default: without augmentation)
+    rotation_range = 40,
+    width_shift_range = 0.2,
+    height_shift_range = 0.2,
+    shear_range = 0.2,
+    zoom_range = 0.2,
+    horizontal_flip = True,
+    fill_mode = "nearest")
