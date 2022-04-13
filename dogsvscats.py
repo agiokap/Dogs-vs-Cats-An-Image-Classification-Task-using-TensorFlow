@@ -5,23 +5,6 @@ Created on Fri Mar 25 17:54:26 2022
 @author: agiokap
 """
 
-import sys
-import zipfile
-import os
-import numpy as np
-import random
-from shutil import copyfile
-
-def in_virtual_environment():
-    base, venv = sys.base_prefix, sys.prefix
-    flag = venv == base
-    if not flag:
-        return print(not flag, venv)
-    else:
-        return print(flag, base)
-    
-in_virtual_environment() # this should be True
-
 # unzip the files, containing the data, into specific directories
 def unzip(zip_location, extract_to):
     zipfile.ZipFile(zip_location, "r").extractall(extract_to)
@@ -91,12 +74,6 @@ def mkdrs(parent, children, source, split, unzip = False):
             copy_from = os.path.join(source[i], f_test)
             paste_to = os.path.join(parent, "testing", children[i], f_test)
             copyfile(copy_from, paste_to)
-            
-mkdrs(parent = "C:/[...]/PetImages",
-      children = ("Dogs", "Cats"),
-      source = ("C:/[...]/PetImages/Dog",
-                "C:/[...]/PetImages/Cat"),
-      split = .9)
 
 def data_generators(training_path, validation_path,
                     # flow_from_directory arguments
@@ -126,21 +103,3 @@ def data_generators(training_path, validation_path,
                                                                                      target_size = target_size)
     
     return training_generator, validation_generator
-
-training_generator, validation_generator = data_generators(
-    training_path = "C:/[...]/Training",
-    validation_path = "C:/[...]/Testing",
-    # flow_from_directory arguments
-    batch_size = 20,
-    class_mode = "binary",
-    target_size = (150, 150),
-    # ImageDataGenerator parameters
-    rescale = 1. / 255.,
-    # augmentation (default: without augmentation)
-    rotation_range = 40,
-    width_shift_range = 0.2,
-    height_shift_range = 0.2,
-    shear_range = 0.2,
-    zoom_range = 0.2,
-    horizontal_flip = True,
-    fill_mode = "nearest")
