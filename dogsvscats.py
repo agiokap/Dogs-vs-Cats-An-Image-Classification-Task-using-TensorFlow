@@ -16,12 +16,12 @@ def mkdrs(parent, children, source, split, unzip = False):
     parent: string
         The full path to the directory, where the training and testing subdirectories will be created.
     children: tuple (string)
-        A {number of classes}-dimensional string tuple of classes' names, to be used when creating child
+        A number of classes-dimensional string tuple of classes' names, to be used when creating child
         subdirectories into parent directory. Note that coherence between child and source has to be retained.
         E.g., if child[i] regards class_i, then source[i] has also to be the full path to the directory, where
         the data, regarding class_i, is stored.
     source: tuple (string)
-        A {number of classes}-dimensional string tuple, containing full paths, each of which directs to
+        A number of classes-dimensional string tuple, containing full paths, each of which directs to
         the directories, where the data regarding a specific class is stored. Note that two paths have to
         be included, if there are two target classes, i.e. when the task at hand is binary image classification,
         and three or more, if the task at hand is a multi-class classification.
@@ -39,7 +39,7 @@ def mkdrs(parent, children, source, split, unzip = False):
     """
     
     # not False (any; a full path to the zipped file, containing the dataset)
-    unzip(zip_location = unzip, extract_to = parent) if unzip else None
+    if unzip: unzip(zip_location = unzip, extract_to = parent)
     
     # initialize list to store valid filenames for each class[i] = children[i]
     filenames = []
