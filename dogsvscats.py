@@ -103,3 +103,57 @@ def data_generators(training_path, validation_path,
                                                                                      target_size = target_size)
     
     return training_generator, validation_generator
+
+model = tf.keras.models.Sequential([
+    # 1st convolutional and max pooling layer + input layer
+    tf.keras.layers.Conv2D(filters = 16, kernel_size = (3, 3), activation = "relu", input_shape = (150, 150, 3)),
+    tf.keras.layers.MaxPooling2D(2, 2),
+    # 2nd convolutional and max pooling layer
+    tf.keras.layers.Conv2D(filters = 32, kernel_size = (3, 3), activation = "relu"),
+    tf.keras.layers.MaxPooling2D(2, 2),
+    # 3rd convolutional and max pooling layer
+    tf.keras.layers.Conv2D(filters = 64, kernel_size = (3, 3), activation = "relu"),
+    tf.keras.layers.MaxPooling2D(2, 2),
+    # 4th convolutional and max pooling layer
+    tf.keras.layers.Conv2D(filters = 128, kernel_size = (3, 3), activation = "relu"),
+    tf.keras.layers.MaxPooling2D(2, 2),
+    # flatten layer
+    tf.keras.layers.Flatten(),
+    # 1st fully connected layerw
+    tf.keras.layers.Dense(units = 512, activation = "relu"),
+    # output layer
+    tf.keras.layers.Dense(units = 1, activation = "sigmoid")])
+
+model.summary()
+
+from tensorflow.keras.optimizers import RMSprop
+
+model.compile(optimizer = RMSprop(learning_rate = +1e-3),
+              loss = "binary_crossentropy",
+              metrics = ["accuracy"])
+
+history = model.fit(training_generator,
+                    steps_per_epoch = 100,
+                    epochs = 100,
+                    validation_data = validation_generator,
+                    validation_steps = 50,
+                    verbose = 2)
+
+import matplotlib.pyplot as plt
+
+acc, val_acc = history.history["accuracy"], history.history["val_accuracy"]
+loss, val_loss = history.history["loss"], history.history["val_loss"]
+
+num_epochs = range(len(acc))
+
+plt.plot(num_epochs, acc)
+plt.plot(num_epochs, val_acc)
+plt.title("Training and validation Accuracy")
+plt.legend(["Training", "Validation"])
+plt.figure()
+
+plt.plot(num_epochs, loss)
+plt.plot(num_epochs, val_loss)
+plt.title("Training and validation Loss")
+plt.legend(["Training", "Validation"])
+plt.figure()
