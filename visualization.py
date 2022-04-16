@@ -8,8 +8,7 @@ Created on Fri Apr 15 16:23:53 2022
 import json
 import matplotlib.pyplot as plt
 
-path = r"C:\Users\agiop\Documents\Data Science\Deep Learning with Python\TensorFlow Developing\dogsvscats\history.json"
-with open(path) as history_json:
+with open(path_to_history_json) as history_json:
     history = json.load(history_json)
 
 acc, val_acc = history["accuracy"], history["val_accuracy"]
