@@ -40,3 +40,7 @@ history = model.fit(training_generator,
                     validation_data=validation_generator,
                     validation_steps = 50,
                     verbose = 2)
+
+history_json = "history.json"
+with open(history_json, mode = 'w') as f:
+    history.to_json(f)
