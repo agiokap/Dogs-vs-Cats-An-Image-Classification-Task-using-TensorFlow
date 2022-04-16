@@ -110,21 +110,3 @@ def data_generators(training_path, validation_path,
                                                                                      target_size = target_size)
     
     return training_generator, validation_generator
-
-training_generator, validation_generator = data_generators(
-    training_path = "C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Training",
-    validation_path = "C:/Users/agiop/Documents/Data Science/Deep Learning with Python/TensorFlow Developing/dogsvscats/PetImages/Testing",
-    # flow_from_directory arguments
-    batch_size = 20,
-    class_mode = "binary",
-    target_size = (150, 150),
-    # ImageDataGenerator parameters
-    rescale = 1. / 255.,
-    # augmentation (default: without augmentation)
-    rotation_range = 40,
-    width_shift_range = 0.2,
-    height_shift_range = 0.2,
-    shear_range = 0.2,
-    zoom_range = 0.2,
-    horizontal_flip = True,
-    fill_mode = "nearest")
