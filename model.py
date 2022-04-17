@@ -41,6 +41,6 @@ history = model.fit(training_generator,
                     validation_steps = 50,
                     verbose = 2)
 
-history_json = "history.json"
-with open(history_json, mode = 'w') as f:
-    history.to_json(f)
+def download_history(history, path):
+    with open(path, mode = 'w') as history_json:
+        history.to_json(history_json)
