@@ -38,9 +38,6 @@ def acc_val_plots(history, from_json = False, augmentation = False, transfer_lea
     plt.legend(["Training", "Validation"])
     ax_loss.set_ylabel("Loss")
     ax_loss.set_xlabel("Epoch")
-        
-acc_val_plots(history = r"C:\Users\agiop\Documents\Data Science\Deep Learning with Python\TensorFlow Developing\dogsvscats\history_augmentation.json",
-              from_json = True, augmentation = True, transfer_learning = False)
 
 def best_lr(history_lr):
     loss, lr = history_lr["loss"], history_lr["lr"]
@@ -48,7 +45,7 @@ def best_lr(history_lr):
     ax2 = ax1.twiny()
     ax2.set_xticks(tuple([epoch for epoch in range(0, 110, 10)]))
     ax1.plot(lr, loss)
-    ax1.legend("a")
+    ax1.legend("Learning Rate")
     plt.title("Loss per Learning Rate per Epoch")
     ax1.set_ylabel("Loss")
     ax1.set_xlabel("Learning Rate")
