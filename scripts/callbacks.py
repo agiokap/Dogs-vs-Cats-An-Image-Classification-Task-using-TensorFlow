@@ -25,7 +25,7 @@ def adjust_learning_rate(uncompiled_model, training_generator):
     '''
     
     learning_rate_schedule = LearningRateScheduler(
-        lambda epoch: +1e-8 * (10 ** (np.arrange(epoch / 20))))
+        lambda epoch: +1e-8 * (10 ** (epoch / 20))
     
     optimizer = SGD(momentum = .9)
     
