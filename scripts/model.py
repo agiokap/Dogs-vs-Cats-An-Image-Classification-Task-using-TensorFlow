@@ -37,6 +37,6 @@ model.summary()
 history = model.fit(training_generator,
                     steps_per_epoch = 100,
                     epochs = 100,
-                    validation_data=validation_generator,
+                    validation_data = validation_generator,
                     validation_steps = 50,
                     verbose = 2)
