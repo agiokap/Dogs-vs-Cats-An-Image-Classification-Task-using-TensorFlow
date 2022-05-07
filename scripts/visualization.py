@@ -39,8 +39,9 @@ def acc_val_plots(history, from_json = False, augmentation = False, transfer_lea
     ax_loss.set_ylabel("Loss")
     ax_loss.set_xlabel("Epoch")
 
-def best_lr(history_lr):
-    loss, lr = history_lr["loss"], history_lr["lr"]
+def best_lr(history, from_json = False):
+    if from_json: history = load_history(history)
+    loss, lr = history["loss"], history["lr"]
     fig, ax1 = plt.subplots()
     ax2 = ax1.twiny()
     ax2.set_xticks(tuple([epoch for epoch in range(0, 110, 10)]))
