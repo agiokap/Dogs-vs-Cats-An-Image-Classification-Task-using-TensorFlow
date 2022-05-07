@@ -73,6 +73,8 @@ def get_last_output(pretrained_model, last_layer):
     
     return last_output, last_shape
 
+last_output, last_shape = get_last_output(pretrained_model, last_layer)
+
 def create_model(pretrained_model, last_output, compiled = True, learning_rate = +1e-4):
     '''
     parameters
@@ -108,3 +110,26 @@ def create_model(pretrained_model, last_output, compiled = True, learning_rate =
                       metrics = ["accuracy"])
     
     return model
+
+uncompiled_model = create_model(
+    pretrained_model = pretrained_model,
+    last_output = last_output,
+    compiled = False)
+
+best_learning_rate, history_learning_rate = adjust_learning_rate(
+    uncompiled_model = uncompiled_model,
+    training_generator = training_generator)
+
+model = create_model(
+    pretrained_model = pretrained_model,
+    last_output = last_output,
+    compiled = True,
+    learning_rate = best_learning_rate)
+
+history_transfer_learning = model.fit(train_generator,
+                                      validation_data = validation_generator,
+                                      steps_per_epoch = 100,
+                                      epochs = 20,
+                                      validation_steps = 50,
+                                      verbose = 2,
+                                      callbacks = [myCallback()])
